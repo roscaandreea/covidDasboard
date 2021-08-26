@@ -1,32 +1,50 @@
 *{
   margin: 0;
 }
-
 body{
   background-color: #f5f6fa;
 }
-
+.app{
+  display: flex;
+  justify-content: space-evenly;
+  padding: 20px;
+}
+.app__left{
+  flex: 0.9;
+}
 .app__header{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
 }
-
 .app__dropdown{
   box-shadow: 7px 5px 5px #089673;
 }
-
 .app__stats{
   display: flex;
   justify-content: space-between;
+  margin-top: 30px;;
 }
-
 .image{
   width: 250px;
   margin-left: 20px;
 }
-
 .text{
   font-size: 40px;
   margin-left: 20px;
+}
+.app__stats_cases{
+  border-bottom: 10px solid #636efa;
+}
+.app__stats_recovered{
+  border-bottom: 10px solid #03cc96;
+}
+.app__stats_deaths{
+  border-bottom: 10px solid #ef553b;
+}
+@media (max-width: 990px) {
+  .app{
+    flex-direction: column;
+  }
 }

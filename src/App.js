@@ -1,5 +1,5 @@
 
-import { FormControl, Select, MenuItem } from '@material-ui/core';
+import { FormControl, Select, MenuItem, Card, CardContent,Table } from '@material-ui/core';
 import './App.css';
 import Cards from './Cards';
 import Map from './Map';
@@ -9,7 +9,16 @@ import React, {useEffect, useState} from 'react';
 function App() {
   const [countries,setCountries] = useState([]);
   const [country,setCountry] = useState(['global']);
-  // https://disease.sh/v3/covid-19/countries
+  const [countryInfo, setCountryInfo] = useState({});
+  const [tableData, setTableData] = useState([]);
+  
+  useEffect(() =>{
+    fetch("https://disease.sh/v3/covid-19/all")
+    .then((response) => response.json())
+    .then((data) => {
+      setCountryInfo(data);
+    });
+  },[]);
   useEffect(() =>{
     //code inside here will run once when the component is loads and not again
     const getCountriesData = async () => {
@@ -21,16 +30,25 @@ function App() {
             name: country.country,
             value: country.countryInfo.iso2,
          }));
+         setTableData(data);
         setCountries(countries);
       });
     };
     getCountriesData();
   },[]);
 
-  const onCountryChange = (event) =>{
+  const onCountryChange = async (event) =>{
     const countryCode = event.target.value;
-    setCountry(countryCode);
-  }
+    const url = countryCode === 'global' ? 'https://disease.sh/v3/covid-19/all' : 
+    `https://disease.sh/v3/covid-19/countries/${countryCode}`;
+    await fetch(url)
+    .then(response => response.json())
+    .then(data =>{
+      setCountry(countryCode);
+      setCountryInfo(data);
+    });
+  };
+  console.log(countryInfo);
   return (
     <div className="app">
       <div className="app__left">
@@ -48,20 +66,24 @@ function App() {
                 </Select>
             </FormControl>
           </div>
-          <h1 className="text">current status</h1>
               {/* InfoBoxs */}
-            <div className="app__stats">
-              <Cards title="Coronavirus cases:" cases={123} total={2000} />
-              <Cards title="Recovered:" cases={1235} total={3000} />
-              <Cards title="Deaths:" cases={1234} total={1000}/>
-            </div>
+          <div className="app__stats">
+              <Cards title="Coronavirus cases:" cases={countryInfo.todayCases} total={countryInfo.cases} />
+              <Cards title="Recovered:" cases={countryInfo.todayRecovered} total={countryInfo.recovered} />
+              <Cards title="Deaths:" cases={countryInfo.todayDeaths} total={countryInfo.deaths}/>
+          </div>
             {/* Map */}
           <Map />
       </div>
-      <div className="app__right">
-        {/* Table */}
-        {/* Graph */}
-      </div>
+      <Card className="app__right">
+        <CardContent>
+          {/* Table */}
+          <h3>Live casses by country</h3>
+          <Table countries={tableData} />
+          {/* Graph */}
+          <h3>Global new cases</h3>
+        </CardContent>
+      </Card>
     </div>
   );
 }
