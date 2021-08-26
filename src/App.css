@@ -2,6 +2,16 @@
   margin: 0;
 }
 
+.app__header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app__dropdown{
+  box-shadow: 7px 5px 5px #089673;
+}
+
 .image{
   width: 250px;
   margin-left: 20px;
