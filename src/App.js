@@ -1,7 +1,8 @@
 
-import { FormControl, Select, MenuItem, Card, CardContent,Table } from '@material-ui/core';
+import { FormControl, Select, MenuItem, Card, CardContent} from '@material-ui/core';
 import './App.css';
 import Cards from './Cards';
+import Table from './Table';
 import Map from './Map';
 import covidImage from './images/image.png';
 import React, {useEffect, useState} from 'react';
@@ -78,7 +79,7 @@ function App() {
       <Card className="app__right">
         <CardContent>
           {/* Table */}
-          <h3>Live casses by country</h3>
+          <h3>Active cases by country</h3>
           <Table countries={tableData} />
           {/* Graph */}
           <h3>Global new cases</h3>
