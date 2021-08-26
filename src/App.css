@@ -2,6 +2,10 @@
   margin: 0;
 }
 
+body{
+  background-color: #f5f6fa;
+}
+
 .app__header{
   display: flex;
   justify-content: space-between;
@@ -10,6 +14,11 @@
 
 .app__dropdown{
   box-shadow: 7px 5px 5px #089673;
+}
+
+.app__stats{
+  display: flex;
+  justify-content: space-between;
 }
 
 .image{
