@@ -4,14 +4,17 @@ import './App.css';
 import Cards from './Cards';
 import Table from './Table';
 import Map from './Map';
+import LineGraph from './LineGraph';
 import covidImage from './images/image.png';
 import React, {useEffect, useState} from 'react';
+import {sortData} from './util';
 
 function App() {
   const [countries,setCountries] = useState([]);
   const [country,setCountry] = useState(['global']);
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
+  const [casesType, setCasesType] = useState("cases");
   
   useEffect(() =>{
     fetch("https://disease.sh/v3/covid-19/all")
@@ -31,7 +34,8 @@ function App() {
             name: country.country,
             value: country.countryInfo.iso2,
          }));
-         setTableData(data);
+         const sortedData = sortData(data);
+         setTableData(sortedData);
         setCountries(countries);
       });
     };
@@ -83,6 +87,7 @@ function App() {
           <Table countries={tableData} />
           {/* Graph */}
           <h3>Global new cases</h3>
+          <LineGraph />
         </CardContent>
       </Card>
     </div>
