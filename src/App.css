@@ -31,8 +31,8 @@ body{
   margin-left: 20px;
 }
 .text{
-  font-size: 40px;
-  margin-left: 20px;
+  font-size: 30px;
+  margin-left: 50px;
 }
 .app__stats_cases{
   border-bottom: 10px solid #636efa;
@@ -43,6 +43,26 @@ body{
 .app__stats_deaths{
   border-bottom: 10px solid #ef553b;
 }
+
+.dateTime{
+  font-weight: bold !important;
+  text-align: center !important;
+}
+
+.textDate{
+  text-align: center !important;
+}
+
+.card{
+  margin:0 2% !important;
+  margin-top: 20px !important;
+}
+
+.app__right_title{
+  margin-top: 30px;
+  text-align: center;
+}
+
 @media (max-width: 990px) {
   .app{
     flex-direction: column;

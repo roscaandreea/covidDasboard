@@ -1,5 +1,5 @@
 
-import { FormControl, Select, MenuItem, Card, CardContent} from '@material-ui/core';
+import { FormControl, Select, MenuItem, Card, CardContent, Grid,Typography} from '@material-ui/core';
 import './App.css';
 import Cards from './Cards';
 import Table from './Table';
@@ -8,6 +8,7 @@ import LineGraph from './LineGraph';
 import covidImage from './images/image.png';
 import React, {useEffect, useState} from 'react';
 import {sortData} from './util';
+import "leaflet/dist/leaflet.css";
 
 function App() {
   const [countries,setCountries] = useState([]);
@@ -15,6 +16,8 @@ function App() {
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
   const [casesType, setCasesType] = useState("cases");
+  const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
+  const [mapZoom, setMapZoom] = useState(3);
   
   useEffect(() =>{
     fetch("https://disease.sh/v3/covid-19/all")
@@ -71,6 +74,7 @@ function App() {
                 </Select>
             </FormControl>
           </div>
+          <h1 className="text">current status</h1>
               {/* InfoBoxs */}
           <div className="app__stats">
               <Cards title="Coronavirus cases:" cases={countryInfo.todayCases} total={countryInfo.cases} />
@@ -78,7 +82,12 @@ function App() {
               <Cards title="Deaths:" cases={countryInfo.todayDeaths} total={countryInfo.deaths}/>
           </div>
             {/* Map */}
-          <Map />
+          <Map center={mapCenter} zoom={mapZoom} />
+        <CardContent>
+            <Typography className="textDate" varian="body2">Last Updated at:</Typography>
+            <Typography className="dateTime" color="textSecondary">{new Date().toLocaleString()}</Typography>                       
+        </CardContent>
+
       </div>
       <Card className="app__right">
         <CardContent>
@@ -86,7 +95,7 @@ function App() {
           <h3>Active cases by country</h3>
           <Table countries={tableData} />
           {/* Graph */}
-          <h3>Global new cases</h3>
+          <h3 className="app__right_title">Global new cases</h3>
           <LineGraph />
         </CardContent>
       </Card>
