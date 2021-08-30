@@ -23,6 +23,12 @@ const casesTypeColors = {
       rgb: "rgb(251, 68, 67)",
       half_op: "rgba(251, 68, 67, 0.5)",
       multiplier: 2000,
+    },
+    tests: {
+      hex: "#26867C",
+      rgb: "rgb(251, 68, 67)",
+      half_op: "rgba(251, 68, 67, 0.5)",
+      multiplier: 2800,
     }
   };
 
@@ -67,6 +73,9 @@ export const showDataOnMap = (data, casesType = "cases") =>(
           </div>
           <div className="info-deaths">
             Deaths: {numeral(country.deaths).format("0,0")}
+          </div>
+          <div className="info-tests">
+            Tests: {numeral(country.tests).format("0,0")}
           </div>
         </div>
       </Popup>

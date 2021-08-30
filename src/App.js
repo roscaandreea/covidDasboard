@@ -5,6 +5,7 @@ import Cards from './Cards';
 import Table from './Table';
 import Map from './Map';
 import LineGraph from './LineGraph';
+import VaccineMap from './component/VaccineMap';
 import covidImage from './images/image.png';
 import React, {useEffect, useState} from 'react';
 import {sortData} from './util';
@@ -57,7 +58,7 @@ function App() {
     .then((data) =>{
       const vaccines = data.map((vaccine) =>({
         country: vaccine.country,
-        value: vaccine.timeline3
+        value: vaccine.timeline
       }));
       setVaccine(vaccines);
     });
@@ -78,9 +79,10 @@ function App() {
       setMapZoom(4);
     });
   };
-  console.log(countryInfo.tests);
+  console.log(countryInfo);
   console.log(vaccine);
   return (
+    <div className="container">
     <div className="app">
       <div className="app__left">
           {/* Header*/}
@@ -102,15 +104,15 @@ function App() {
           <div className="app__stats">
               <Cards isBlue active={casesType === 'cases'} onClick={(e) => setCasesType("cases")} title="New cases:" cases={prettyPrintStat(countryInfo.todayCases)} total={prettyPrintStat2(countryInfo.cases)} />
               <Cards active={casesType === 'recovered'} onClick={(e) => setCasesType("recovered")} title="New recovered:" cases={prettyPrintStat(countryInfo.todayRecovered)} total={prettyPrintStat2(countryInfo.recovered)} />
-              <Cards isRed active={casesType === 'deaths'} onClick={(e) => setCasesType("deaths")} title=" New deaths:" cases={prettyPrintStat(countryInfo.todayDeaths)} total={prettyPrintStat2(countryInfo.deaths)}/>
-              <Cards isRed active={casesType === 'tests'} onClick={(e) => setCasesType("tests")} title=" Tests:" cases={prettyPrintStat(countryInfo.tests)} total={prettyPrintStat2(countryInfo.tests)}/>              
+              <Cards isRed active={casesType === 'deaths'} onClick={(e) => setCasesType("deaths")} title=" New deaths:" cases={prettyPrintStat(countryInfo.todayDeaths)} total={prettyPrintStat2(countryInfo.deaths)}/>     
           </div>
             {/* Map */}
           <Map casesType={casesType} countries={mapCountries} center={mapCenter} zoom={mapZoom} />
+          {/*
           <CardContent>
             <Typography className="textDate" varian="body2">Last Updated at:</Typography>
             <Typography className="dateTime" color="textSecondary">{new Date().toLocaleString()}</Typography>                       
-          </CardContent>
+          </CardContent> */}
 
       </div>
       <Card className="app__right">
@@ -123,7 +125,13 @@ function App() {
           <LineGraph className="app__graph" casesType={casesType} />
         </CardContent>
       </Card>
+      <div className="app__bottom">
+      </div>
     </div>
+     <div className="app__bottom">
+       <VaccineMap />
+     </div>
+  </div>
   );
 }
 
