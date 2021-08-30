@@ -20,6 +20,7 @@ body{
 }
 .app__dropdown{
   box-shadow: 7px 5px 5px #089673;
+  background-color: white;
 }
 .app__stats{
   display: flex;
@@ -57,9 +58,21 @@ body{
   margin:0 2% !important;
   margin-top: 20px !important;
 }
-
+.app__right{
+  display: flex;
+  flex-direction: column;
+}
+.app__right .MuiCardContent-root{
+  flex-direction: column;
+  display: flex;
+  flex-grow: 1;
+}
+.app__graph{
+  flex-grow: 1;
+}
 .app__right_title{
   margin-top: 30px;
+  margin-bottom: 20px;
   text-align: center;
 }
 

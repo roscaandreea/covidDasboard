@@ -38,14 +38,13 @@ const options = {
           display: false,
         },
         ticks: {
-          // Include a dollar sign in the ticks
           callback: function (value, index, values) {
             return numeral(value).format("0a");
-          },
-        },
-      },
-    ],
-  },
+          }
+        }
+      }
+    ]
+  }
 };
 
 const buildChartData = (data, casesType) => {
@@ -64,9 +63,8 @@ const buildChartData = (data, casesType) => {
   return chartData;
 };
 
-function LineGraph({ casesType="cases" }) {
+function LineGraph({ casesType="cases",...props }) {
   const [data, setData] = useState({});
-
   useEffect(() => {
     const fetchData = async () => {
       await fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=120")
@@ -76,8 +74,6 @@ function LineGraph({ casesType="cases" }) {
         .then((data) => {
           let chartData = buildChartData(data, casesType);
           setData(chartData);
-          console.log(chartData);
-          // buildChart(chartData);
         });
     };
 
@@ -85,7 +81,7 @@ function LineGraph({ casesType="cases" }) {
   }, [casesType]);
 
   return (
-    <div className="chart">
+    <div className={props.className}>
       {data?.length > 0 && (
         <Line
           data={{

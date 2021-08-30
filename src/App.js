@@ -1,5 +1,5 @@
 
-import { FormControl, Select, MenuItem, Card, CardContent, Grid,Typography} from '@material-ui/core';
+import { FormControl, Select, MenuItem, Card, CardContent,Typography} from '@material-ui/core';
 import './App.css';
 import Cards from './Cards';
 import Table from './Table';
@@ -9,15 +9,19 @@ import covidImage from './images/image.png';
 import React, {useEffect, useState} from 'react';
 import {sortData} from './util';
 import "leaflet/dist/leaflet.css";
+import {prettyPrintStat,prettyPrintStat2 } from './util';
+
 
 function App() {
   const [countries,setCountries] = useState([]);
   const [country,setCountry] = useState(['global']);
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
-  const [casesType, setCasesType] = useState("cases");
   const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
   const [mapZoom, setMapZoom] = useState(3);
+  const [mapCountries, setMapCountries] = useState([]);
+  const [casesType, setCasesType] = useState("cases");
+  const [vaccine,setVaccine] = useState();
   
   useEffect(() =>{
     fetch("https://disease.sh/v3/covid-19/all")
@@ -39,24 +43,43 @@ function App() {
          }));
          const sortedData = sortData(data);
          setTableData(sortedData);
-        setCountries(countries);
+         setMapCountries(data);
+         setCountries(countries);
       });
     };
     getCountriesData();
   },[]);
 
+  useEffect(() =>{
+  const getVaccineData = async() => {
+    await fetch("https://disease.sh/v3/covid-19/vaccine/coverage/countries?lastdays=1")
+    .then((response) => response.json())
+    .then((data) =>{
+      const vaccines = data.map((vaccine) =>({
+        country: vaccine.country,
+        value: vaccine.timeline3
+      }));
+      setVaccine(vaccines);
+    });
+  };
+  getVaccineData();
+},[]);
+
   const onCountryChange = async (event) =>{
     const countryCode = event.target.value;
     const url = countryCode === 'global' ? 'https://disease.sh/v3/covid-19/all' : 
     `https://disease.sh/v3/covid-19/countries/${countryCode}`;
-    await fetch(url)
+     await fetch(url)
     .then(response => response.json())
     .then(data =>{
       setCountry(countryCode);
       setCountryInfo(data);
+      setMapCenter([data.countryInfo.lat,data.countryInfo.long]);
+      setMapZoom(4);
     });
   };
-  console.log(countryInfo);
+  console.log(countryInfo.tests);
+  console.log(vaccine);
   return (
     <div className="app">
       <div className="app__left">
@@ -77,16 +100,17 @@ function App() {
           <h1 className="text">current status</h1>
               {/* InfoBoxs */}
           <div className="app__stats">
-              <Cards title="Coronavirus cases:" cases={countryInfo.todayCases} total={countryInfo.cases} />
-              <Cards title="Recovered:" cases={countryInfo.todayRecovered} total={countryInfo.recovered} />
-              <Cards title="Deaths:" cases={countryInfo.todayDeaths} total={countryInfo.deaths}/>
+              <Cards isBlue active={casesType === 'cases'} onClick={(e) => setCasesType("cases")} title="New cases:" cases={prettyPrintStat(countryInfo.todayCases)} total={prettyPrintStat2(countryInfo.cases)} />
+              <Cards active={casesType === 'recovered'} onClick={(e) => setCasesType("recovered")} title="New recovered:" cases={prettyPrintStat(countryInfo.todayRecovered)} total={prettyPrintStat2(countryInfo.recovered)} />
+              <Cards isRed active={casesType === 'deaths'} onClick={(e) => setCasesType("deaths")} title=" New deaths:" cases={prettyPrintStat(countryInfo.todayDeaths)} total={prettyPrintStat2(countryInfo.deaths)}/>
+              <Cards isRed active={casesType === 'tests'} onClick={(e) => setCasesType("tests")} title=" Tests:" cases={prettyPrintStat(countryInfo.tests)} total={prettyPrintStat2(countryInfo.tests)}/>              
           </div>
             {/* Map */}
-          <Map center={mapCenter} zoom={mapZoom} />
-        <CardContent>
+          <Map casesType={casesType} countries={mapCountries} center={mapCenter} zoom={mapZoom} />
+          <CardContent>
             <Typography className="textDate" varian="body2">Last Updated at:</Typography>
             <Typography className="dateTime" color="textSecondary">{new Date().toLocaleString()}</Typography>                       
-        </CardContent>
+          </CardContent>
 
       </div>
       <Card className="app__right">
@@ -95,8 +119,8 @@ function App() {
           <h3>Active cases by country</h3>
           <Table countries={tableData} />
           {/* Graph */}
-          <h3 className="app__right_title">Global new cases</h3>
-          <LineGraph />
+          <h3 className="app__right_title">Global new {casesType}</h3>
+          <LineGraph className="app__graph" casesType={casesType} />
         </CardContent>
       </Card>
     </div>

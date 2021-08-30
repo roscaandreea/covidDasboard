@@ -1,0 +1,44 @@
+.cards{
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+}
+
+.cards:not(:last-child) {
+    margin-right: 15px;
+  }
+.cards__cases {
+    color: #cc1034;
+    font-weight: 600;
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+.cards__cases--green {
+    color: #03cc96 !important;
+  }
+.cards__cases--blue{
+    color: #636efa !important;
+}
+
+.cards--selected {
+    border-top: 10px solid #03cc96;
+  }
+.cards--blue{
+    border-color: #636efa;
+}
+
+.cards--red {
+    border-color: #ef553b;
+  }
+  
+.cards__total {
+    color: #6c757d;
+    font-weight: bold !important;
+    font-size: 1rem !important;
+    margin-top: 15px !important;
+  }
+
+.cards__title{
+    font-weight: bold !important;
+  }
