@@ -1,0 +1,6 @@
+.containerStuff{
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+    margin-bottom: 30px;
+}

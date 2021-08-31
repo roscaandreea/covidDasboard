@@ -1,11 +1,11 @@
 
-import { FormControl, Select, MenuItem, Card, CardContent,Typography} from '@material-ui/core';
+import { FormControl, Select, MenuItem, Card, CardContent} from '@material-ui/core';
 import './App.css';
 import Cards from './Cards';
 import Table from './Table';
 import Map from './Map';
 import LineGraph from './LineGraph';
-import VaccineMap from './component/VaccineMap';
+import Vaccine from './component/Vaccine';
 import covidImage from './images/image.png';
 import React, {useEffect, useState} from 'react';
 import {sortData} from './util';
@@ -125,11 +125,10 @@ function App() {
           <LineGraph className="app__graph" casesType={casesType} />
         </CardContent>
       </Card>
-      <div className="app__bottom">
-      </div>
     </div>
+     <hr class="accessory" />
      <div className="app__bottom">
-       <VaccineMap />
+       <Vaccine />
      </div>
   </div>
   );
