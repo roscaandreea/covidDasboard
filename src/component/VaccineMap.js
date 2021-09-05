@@ -14,7 +14,7 @@ const VaccineMap = ({ countries }) =>{
         layer.options.fillColor = country.properties.color;
         const name = country.properties.ADMIN;
         const vaccineText = country.properties.vaccineText;
-        layer.bindPopup(`${name} : <strong>${vaccineText}</strong> doses administrated`);
+        layer.bindPopup(`${name} : <strong>${vaccineText}</strong> vaccinated`);
       };
     return(
         <Map style={{ display: "flex",height: "100vh", width:"176vh"}} zoom={2} center={[40,10]}>

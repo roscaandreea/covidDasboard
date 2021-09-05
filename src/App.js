@@ -1,5 +1,5 @@
 
-import { FormControl, Select, MenuItem, Card, CardContent} from '@material-ui/core';
+import { FormControl, Select, MenuItem, Card, CardContent,Typography} from '@material-ui/core';
 import './App.css';
 import Cards from './Cards';
 import Table from './Table';
@@ -8,6 +8,7 @@ import LineGraph from './LineGraph';
 import Vaccine from './component/Vaccine';
 import covidImage from './images/image.png';
 import React, {useEffect, useState} from 'react';
+import * as WebDataRocksReact from 'react-webdatarocks';
 import {sortData} from './util';
 import "leaflet/dist/leaflet.css";
 import {prettyPrintStat,prettyPrintStat2 } from './util';
@@ -130,7 +131,19 @@ function App() {
      <div className="app__bottom">
        <Vaccine />
      </div>
-  </div>
+     <hr class="accessory" />
+     <div>
+      <WebDataRocksReact.Pivot 
+        toolbar={true} 
+        report="https://cdn.webdatarocks.com/reports/report.json" 
+      />
+    </div>
+     <hr class="accessory" />
+    <CardContent>
+        <Typography className="textDate" varian="body2">Last Updated at:</Typography>
+        <Typography className="dateTime" color="textSecondary">{new Date().toLocaleString()}</Typography>                       
+    </CardContent>
+    </div> 
   );
 }
 
