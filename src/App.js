@@ -8,10 +8,10 @@ import LineGraph from './LineGraph';
 import Vaccine from './component/Vaccine';
 import covidImage from './images/image.png';
 import React, {useEffect, useState} from 'react';
-import * as WebDataRocksReact from 'react-webdatarocks';
 import {sortData} from './util';
 import "leaflet/dist/leaflet.css";
 import {prettyPrintStat,prettyPrintStat2 } from './util';
+import CustomTable from './component/CustomTable/CustomTable';
 
 
 function App() {
@@ -133,10 +133,7 @@ function App() {
      </div>
      <hr class="accessory" />
      <div>
-      <WebDataRocksReact.Pivot 
-        toolbar={true} 
-        report="https://cdn.webdatarocks.com/reports/report.json" 
-      />
+      <CustomTable />
     </div>
      <hr class="accessory" />
     <CardContent>
