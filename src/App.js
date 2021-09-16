@@ -135,7 +135,6 @@ function App() {
      <div>
       <CustomTable />
     </div>
-     <hr class="accessory" />
     <CardContent>
         <Typography className="textDate" varian="body2">Last Updated at:</Typography>
         <Typography className="dateTime" color="textSecondary">{new Date().toLocaleString()}</Typography>                       

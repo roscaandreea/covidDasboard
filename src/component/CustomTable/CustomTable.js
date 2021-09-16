@@ -13,11 +13,50 @@ import {sortData} from '../../util';
 
 const useStyles = makeStyles({  
     root: {  
-      width: '100%',  
+      width: '91%',
+      marginLeft: '60px',
+      fontWeight: 'bold',
     },  
     container: {  
-      maxHeight: 440,  
-    },  
+      maxHeight: 440,
+      background: '#626b8b',
+    },
+    tablehead: {
+      background: '#445175',
+      color: '#fff',
+      fontWeight: 'bold',
+      fontSize: '1rem',
+    },
+    tableCellCountry: {
+      color: '#fff',
+      fontWeight: 'bold',
+      fontSize: '1rem'
+    },
+    tableCellActive: {
+      color: 'rgb(160, 255, 210)',
+      fontWeight: 'bold',
+      fontSize: '1rem'
+    },
+    tableCellCritical: {
+      color: '#ffc137',
+      fontWeight: 'bold',
+      fontSize: '1rem'
+    },
+    tableCellDeaths: {
+      color: 'rgb(156, 41, 41)',
+      fontWeight: 'bold',
+      fontSize: '1rem'
+    },
+    tableCellVaccine: {
+      color: 'rgb(62, 206, 229)',
+      fontWeight: 'bold',
+      fontSize: '1rem'
+    },
+    tableCellRecovered: {
+      color: '#03cc96',
+      fontWeight: 'bold',
+      fontSize: '1rem'
+    }
   });
 
 const CustomTable = () => {
@@ -47,41 +86,42 @@ const CustomTable = () => {
         setPage(0);  
       };
       return(
-        <Paper className={classes.root}>  
+        <Paper className={classes.root}> 
+        <h1 className="vaccineTitle">World COVID-19 Stats</h1>
         <TableContainer className={classes.container}>  
-          <Table stickyHeader aria-label="sticky table">  
+          <Table stickyHeader aria-label="sticky table">
           <TableHead>  
               <TableRow>  
-                <TableCell>Name</TableCell>  
-                <TableCell align="right">Confirmed</TableCell>  
-                <TableCell align="right">Per.Million</TableCell>  
-                <TableCell align="right">Critical</TableCell>  
-                <TableCell align="right">Per.Million</TableCell>  
-                <TableCell align="right">Deceased</TableCell>  
-                <TableCell align="right">Per.Million</TableCell>  
-                <TableCell align="right">Tests</TableCell> 
-                <TableCell align="right">Per.Million</TableCell> 
-                <TableCell align="right">Recovered</TableCell> 
-                <TableCell align="right">Per.Million</TableCell> 
+                <TableCell className={classes.tablehead}>Name</TableCell>  
+                <TableCell className={classes.tablehead} align="center">Confirmed</TableCell>  
+                <TableCell className={classes.tablehead} align="center">Per.Million</TableCell>  
+                <TableCell className={classes.tablehead} align="center">Critical</TableCell>  
+                <TableCell className={classes.tablehead} align="center">Per.Million</TableCell>  
+                <TableCell className={classes.tablehead} align="center">Deceased</TableCell>  
+                <TableCell className={classes.tablehead} align="center">Per.Million</TableCell>  
+                <TableCell className={classes.tablehead} align="center">Tests</TableCell> 
+                <TableCell className={classes.tablehead} align="center">Per.Million</TableCell> 
+                <TableCell className={classes.tablehead} align="center">Recovered</TableCell> 
+                <TableCell className={classes.tablehead} align="center">Per.Million</TableCell> 
               </TableRow>  
             </TableHead>  
             <TableBody>  
               {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {  
                 return (  
              <TableRow >  
-                  <TableCell component="th" scope="row">  
+                  <TableCell className={classes.tableCellCountry} component="th" scope="row">  
                     {row.country}  
                   </TableCell>  
-                  <TableCell align="right">{row.active}</TableCell>  
-                  <TableCell align="right">{row.activePerMillion}</TableCell>  
-                  <TableCell align="right">{row.critical}</TableCell>  
-                  <TableCell align="right">{row.criticalPerMillion}</TableCell>  
-                  <TableCell align="right">{row.deaths}</TableCell>  
-                  <TableCell align="right">{row.deathsPerMillion}</TableCell>  
-                  <TableCell align="right">{row.tests}</TableCell>
-                  <TableCell align="right">{row.testsPerMillion}</TableCell> 
-                  <TableCell align="right">{row.recovered}</TableCell> 
-                  <TableCell align="right">{row.recoveredPerMillion}</TableCell>   
+                  <TableCell className={classes.tableCellActive} align="center">{row.active}</TableCell>  
+                  <TableCell className={classes.tableCellActive} align="center">{row.activePerOneMillion}</TableCell>  
+                  <TableCell className={classes.tableCellCritical} align="center">{row.critical}</TableCell>  
+                  <TableCell className={classes.tableCellCritical} align="center">{row.criticalPerOneMillion}</TableCell>  
+                  <TableCell className={classes.tableCellDeaths} align="center">{row.deaths}</TableCell>  
+                  <TableCell className={classes.tableCellDeaths} align="center">{row.deathsPerOneMillion}</TableCell>  
+                  <TableCell className={classes.tableCellVaccine} align="center">{row.tests}</TableCell>
+                  <TableCell className={classes.tableCellVaccine} align="center">{row.testsPerOneMillion}</TableCell> 
+                  <TableCell className={classes.tableCellRecovered} align="center">{row.recovered}</TableCell> 
+                  <TableCell className={classes.tableCellRecovered} align="center">{row.recoveredPerOneMillion}</TableCell>   
                 </TableRow>     
                 );  
               })}  
